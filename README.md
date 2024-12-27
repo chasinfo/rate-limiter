@@ -57,7 +57,3 @@ O rate limiter pode ser utilizado como middleware em um servidor web. Ele limita
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
-
-## Licença
-
-Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.

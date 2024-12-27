@@ -1,18 +1,17 @@
 package limiter
 
 import (
-	"context"
 	"errors"
 	"sync"
 	"time"
 )
 
 type RateLimiter struct {
-	limits       map[string]int
-	blockTime    time.Duration
-	requests     map[string]int
-	mu           sync.Mutex
-	expiration   map[string]time.Time
+	limits     map[string]int
+	blockTime  time.Duration
+	requests   map[string]int
+	mu         sync.Mutex
+	expiration map[string]time.Time
 }
 
 func NewRateLimiter(limits map[string]int, blockTime time.Duration) *RateLimiter {

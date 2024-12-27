@@ -2,24 +2,11 @@ package limiter
 
 import (
 	"net/http"
-	"time"
-
-	"github.com/gorilla/context"
 )
-
-type RateLimiter struct {
-	// Defina os campos necessários para o rate limiter
-}
-
-func NewRateLimiter() *RateLimiter {
-	return &RateLimiter{
-		// Inicialize os campos necessários
-	}
-}
 
 func (rl *RateLimiter) Limit(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ip := r.RemoteAddr // Obtenha o endereço IP do cliente
+		ip := r.RemoteAddr               // Obtenha o endereço IP do cliente
 		token := r.Header.Get("API_KEY") // Obtenha o token do cabeçalho
 
 		// Lógica para verificar limites por IP e token

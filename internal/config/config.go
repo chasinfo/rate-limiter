@@ -9,9 +9,10 @@ import (
 )
 
 type Config struct {
-	RateLimitIP      int
-	RateLimitToken   int
-	BlockDuration    int
+	RateLimitIP    int
+	RateLimitToken int
+	BlockDuration  int
+	ServerPort     string
 }
 
 func LoadConfig() *Config {
@@ -23,11 +24,13 @@ func LoadConfig() *Config {
 	rateLimitIP, _ := strconv.Atoi(getEnv("RATE_LIMIT_IP", "5"))
 	rateLimitToken, _ := strconv.Atoi(getEnv("RATE_LIMIT_TOKEN", "10"))
 	blockDuration, _ := strconv.Atoi(getEnv("BLOCK_DURATION", "300"))
+	serverPort := getEnv("SERVER_PORT", ":8080")
 
 	return &Config{
 		RateLimitIP:    rateLimitIP,
 		RateLimitToken: rateLimitToken,
 		BlockDuration:  blockDuration,
+		ServerPort:     serverPort,
 	}
 }
 

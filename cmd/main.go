@@ -3,22 +3,25 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
-	"github.com/go-delve/delve/pkg/config"
+	"github.com/chasinfo/rate-limiter/internal/config"
+	"github.com/chasinfo/rate-limiter/internal/limiter"
 )
 
 func main() {
 	// Carrega as configurações do projeto
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalf("Erro ao carregar configurações: %v", err)
-	}
+	cfg := config.LoadConfig()
 
 	// Inicializa o rate limiter
-	rateLimiter := limiter.NewRateLimiter(cfg)
+	rateLimiter := limiter.NewRateLimiter(map[string]int{
+		"BlockDuration":  cfg.BlockDuration,
+		"RateLimitIP":    cfg.RateLimitIP,
+		"RateLimitToken": cfg.RateLimitToken,
+	}, time.Hour)
 
 	// Configura o servidor web
-	http.Handle("/", rateLimiter.Middleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/", rateLimiter.Limit(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Requisição bem-sucedida!"))
 	})))
